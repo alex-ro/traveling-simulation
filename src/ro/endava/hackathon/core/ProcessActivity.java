@@ -1,12 +1,12 @@
 package ro.endava.hackathon.core;
 
-import java.util.List;
+import java.util.Set;
 
 public class ProcessActivity {
 	private Activity activity;
 	private Boolean working;
 	private Integer remainingHours;
-	private List<ProcessPassenger> passengerActivity;
+	private Set<ProcessPassenger> passengerActivity;
 
 	public Activity getActivity() {
 		return activity;
@@ -32,11 +32,11 @@ public class ProcessActivity {
 		this.remainingHours = remainingHours;
 	}
 
-	public List<ProcessPassenger> getPassengerActivity() {
+	public Set<ProcessPassenger> getPassengerActivity() {
 		return passengerActivity;
 	}
 
-	public void setPassengerActivity(List<ProcessPassenger> passengerActivity) {
+	public void setPassengerActivity(Set<ProcessPassenger> passengerActivity) {
 		this.passengerActivity = passengerActivity;
 	}
 }

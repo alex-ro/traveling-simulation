@@ -1,11 +1,11 @@
 package ro.endava.hackathon.core;
 
-import java.util.List;
+import java.util.Set;
 
 public class Passenger {
 	private String name;
 	private Integer budget;
-	private List<Activity> preferences;
+	private Set<Activity> preferences;
 	private Integer continuousSleepTime;
 	private Integer maxAwakeTime;
 
@@ -25,11 +25,11 @@ public class Passenger {
 		this.budget = budget;
 	}
 
-	public List<Activity> getPreferences() {
+	public Set<Activity> getPreferences() {
 		return preferences;
 	}
 
-	public void setPreferences(List<Activity> preferences) {
+	public void setPreferences(Set<Activity> preferences) {
 		this.preferences = preferences;
 	}
 
