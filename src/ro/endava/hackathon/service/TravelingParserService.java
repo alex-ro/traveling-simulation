@@ -24,6 +24,32 @@ import ro.endava.hackathon.repository.ActivityRepository;
  */
 public class TravelingParserService {
 
+	public Integer getJouneyDuration(String path) throws FileNotFoundException,
+			XMLStreamException {
+
+		Integer jouneyDuration = null;
+
+		XMLInputFactory factory = XMLInputFactory.newInstance();
+		XMLStreamReader reader = factory
+				.createXMLStreamReader(new FileInputStream(path));
+
+		while (reader.hasNext()) {
+			int event = reader.next();
+
+			switch (event) {
+			case XMLStreamConstants.START_ELEMENT:
+				if ("journey".equals(reader.getLocalName())) {
+					jouneyDuration = Integer.parseInt(reader
+							.getAttributeValue(0));
+				}
+				break;
+
+			}
+
+		}
+		return jouneyDuration;
+	}
+
 	public List<Activity> getActivities(String path)
 			throws FileNotFoundException, XMLStreamException {
 
@@ -149,7 +175,7 @@ public class TravelingParserService {
 
 	public List<Person> getPersons(String path, List<Activity> activityList)
 			throws FileNotFoundException, XMLStreamException {
-		
+
 		ActivityRepository activityRepository = new ActivityRepository();
 
 		List<Person> personList = null;
@@ -193,7 +219,8 @@ public class TravelingParserService {
 				case "preferences":
 					List<String> activityNames = Arrays.asList(tagContent
 							.split(" "));
-					currentPerson.setPreferences(activityRepository.getActivityByName(activityNames, activityList));
+					currentPerson.setPreferences(activityRepository
+							.getActivityByName(activityNames, activityList));
 					break;
 				case "continuousSleepTime":
 					currentPerson.setContinuousSleepTime(Integer

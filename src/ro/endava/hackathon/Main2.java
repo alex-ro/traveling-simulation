@@ -25,6 +25,9 @@ public class Main2 {
 	 */
 	public static void main(String[] args) throws FileNotFoundException, XMLStreamException {
 		TravelingParserService travelingParserService = new TravelingParserService();
+		
+		Integer journey = travelingParserService
+				.getJouneyDuration("D:\\dataset.xml");
 
 		List<Activity> activityList = travelingParserService
 				.getActivities("D:\\dataset.xml");
