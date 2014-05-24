@@ -41,7 +41,7 @@ public class TravelingParserService {
 			switch (event) {
 			case XMLStreamConstants.START_ELEMENT:
 				if ("activities".equals(reader.getLocalName())) {
-					activityList = new ArrayList<>();
+					activityList = new ArrayList<Activity>();
 				}
 				if ("dance".equals(reader.getLocalName())) {
 					currentActivity = new Activity();

@@ -31,6 +31,7 @@ public class OutputTransform {
 			}
 			r.setPerson(p.getPerson());
 			r.setIndex(index);
+			res.add(r);
 		}
 		return res;
 	}
@@ -61,7 +62,7 @@ public class OutputTransform {
 			TransformerFactory transformerFactory = TransformerFactory.newInstance();
 			Transformer transformer = transformerFactory.newTransformer();
 			DOMSource source = new DOMSource(doc);
-			StreamResult result = new StreamResult(new File("C:\\output.xml"));
+			StreamResult result = new StreamResult(new File("D:\\output.xml"));
 			transformer.transform(source, result);
 			
 		} catch (ParserConfigurationException pce) {
@@ -85,6 +86,7 @@ public class OutputTransform {
 		if (r.getActivity() != null) {
 			Element activity = doc.createElement("activity");
 			activity.appendChild(doc.createTextNode(r.getActivity().getName()));
+			entry.appendChild(activity);
 		}
 		
 		rootElement.appendChild(entry);

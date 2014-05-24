@@ -21,9 +21,16 @@ public class Comparators {
 	};
 		
 	//descrescator
-	public static Comparator<ProcessPerson> personCompareByRemainingBuget = new Comparator<ProcessPerson>() {
+	public static Comparator<ProcessPerson> personCompareByRemainingBugetDesceding = new Comparator<ProcessPerson>() {
 		public int compare(ProcessPerson pp1, ProcessPerson pp2) {
 			return pp2.getRemainingHours().compareTo(pp1.getRemainingHours());
+		}
+	};
+	
+	//crescator
+	public static Comparator<ProcessPerson> personCompareByRemainingBugetAscending = new Comparator<ProcessPerson>() {
+		public int compare(ProcessPerson pp1, ProcessPerson pp2) {
+			return pp1.getRemainingHours().compareTo(pp2.getRemainingHours());
 		}
 	};
 	
