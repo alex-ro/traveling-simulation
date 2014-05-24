@@ -1,6 +1,7 @@
 package ro.endava.hackathon;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +20,7 @@ import ro.endava.hackathon.service.UpdateService;
 import ro.endava.hackathon.util.OutputTransform;
 
 public class Main {
-	public static void main(String[] args) throws FileNotFoundException, XMLStreamException {
+	public static void main(String[] args) throws XMLStreamException, IOException {
 		long startTime = System.currentTimeMillis();
 		if (Configuration.LOG) {
 			System.out.println("Parsare dataset pentru activitati...");

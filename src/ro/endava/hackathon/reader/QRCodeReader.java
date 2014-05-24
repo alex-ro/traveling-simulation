@@ -28,10 +28,10 @@ import ro.endava.hackathon.util.FileUtil;
  */
 public class QRCodeReader {
 	public static void addMoreDataFromPng(Map<String, Person> personMap, Map<String,Activity> activityMap, String folderPath) {
-		List<String> files = FileUtil.getFilePaths(folderPath, ".png");
+		/*List<String> files = FileUtil.getFilePaths(folderPath, ".png");
 		for (String filePath: files) {
 			
-		}
+		}*/
 		
 	}
 	

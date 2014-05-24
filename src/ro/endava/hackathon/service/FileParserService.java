@@ -1,5 +1,7 @@
 package ro.endava.hackathon.service;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,7 +15,7 @@ import ro.endava.hackathon.reader.QRCodeReader;
 public class FileParserService {
 
 	public static void addMoreInfoFromFiles(List<Activity> activities,
-			List<Person> persons, String folderPath) {
+			List<Person> persons, String folderPath) throws FileNotFoundException, IOException {
 		// prepare data
 		Map<String, Activity> activityMap = getActivityMap(activities);
 		Map<String, Person> personMap = getPersonMap(persons);
