@@ -6,8 +6,10 @@ import java.util.List;
 
 import ro.endava.hackathon.core.ProcessActivity;
 import ro.endava.hackathon.core.ProcessPerson;
+import ro.endava.hackathon.core.Result;
 import ro.endava.hackathon.util.Comparators;
 import ro.endava.hackathon.util.Filter;
+import ro.endava.hackathon.util.OutputTransform;
 
 public class Main {
 	public static void main(String[] args) {
@@ -17,19 +19,19 @@ public class Main {
 		List<ProcessPerson> processPersons = new ArrayList<ProcessPerson>();
 
 		Integer totalTurnover = 0;
+		List<Result> results = new ArrayList<Result>();
+		
 		for (Integer currentHour = 0; currentHour < hours; currentHour++) {
-			System.out.println("Asignare pentru ora " + currentHour + "...");
+			System.out.println("*** Asignare pentru ora " + currentHour + "...");
 			Filter.getOpenActivitiesAndSort(processActivities, Comparators.activityCompareByTicket);
 
 			Integer turnoverThisHour = 0;
 			for (ProcessActivity processActivity : processActivities) {
 				List<ProcessPerson> availableProcessPersons = Filter.getAvailablePersonForActivityAndSort(processPersons, processActivity.getActivity(), Comparators.personCompareByRemainingBuget);
-
 				if (availableProcessPersons.size() > processActivity.getActivity().getMinNoOfParticipants()) {
 					System.out.println("Se adauga persoanele la activitatea " + processActivity.getActivity().getName() + "...");
 					if (availableProcessPersons.size() < processActivity.getActivity().getCapacity()) {
 						processActivity.getPersonsAttending().addAll(availableProcessPersons);
-
 						turnoverThisHour += processActivity.getActivity().getTicketPrice() * availableProcessPersons.size();
 					} else {
 						for (Iterator<ProcessPerson> iterator = availableProcessPersons.listIterator(); iterator.hasNext();) {
@@ -37,7 +39,6 @@ public class Main {
 								iterator.remove();
 							}
 						}
-
 						turnoverThisHour += processActivity.getActivity().getTicketPrice() * processActivity.getActivity().getCapacity();
 					}
 					for (ProcessPerson processPerson : availableProcessPersons) {
@@ -49,9 +50,9 @@ public class Main {
 			}
 
 			totalTurnover += turnoverThisHour;
+			results.addAll(OutputTransform.getOutput(processPersons, currentHour));
 
-			// Scriere output
-
+			System.out.println("Se actualizeaza activitatile...");
 			for (ProcessActivity processActivity : processActivities) {
 				if (processActivity.getRemainingHours() > 1) {
 					processActivity.setRemainingHours(processActivity.getRemainingHours() - 1);
@@ -61,6 +62,7 @@ public class Main {
 				}
 				processActivity.setPersonsAttending(null);
 			}
+			System.out.println("Se actualizeaza persoanele...");
 			for (ProcessPerson processPerson : processPersons) {
 				if (processPerson.getRemainingHours() > 1) {
 					processPerson.setRemainingHours(processPerson.getRemainingHours() - 1);
@@ -72,5 +74,7 @@ public class Main {
 				processPerson.setAssignedToProcessActivity(null);
 			}
 		}
+		
+		System.out.print("Suma totala este: " + totalTurnover);
 	}
 }
