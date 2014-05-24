@@ -1,19 +1,19 @@
 package ro.endava.hackathon.core;
 
-public class ProcessPassenger {
-	private Passenger passenger;
+public class ProcessPerson {
+	private Person person;
 	private Integer remainingBudget;
 	private Boolean awake;
 	private Integer remainingHours;
 	private Boolean assigned;
 	private ProcessActivity processActivity;
 
-	public Passenger getPassenger() {
-		return passenger;
+	public Person getPerson() {
+		return person;
 	}
 
-	public void setPassenger(Passenger passenger) {
-		this.passenger = passenger;
+	public void setPerson(Person person) {
+		this.person = person;
 	}
 
 	public Integer getRemainingBudget() {

@@ -2,7 +2,7 @@ package ro.endava.hackathon.core;
 
 import java.util.List;
 
-public class Passenger {
+public class Person {
 	private String name;
 	private Integer budget;
 	private List<Activity> preferences;
