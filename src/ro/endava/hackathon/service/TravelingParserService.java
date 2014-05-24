@@ -24,7 +24,7 @@ import ro.endava.hackathon.repository.ActivityRepository;
  */
 public class TravelingParserService {
 
-	public Integer getJouneyDuration(String path) throws FileNotFoundException,
+	public static Integer getJouneyDuration(String path) throws FileNotFoundException,
 			XMLStreamException {
 
 		Integer jouneyDuration = null;
@@ -50,7 +50,7 @@ public class TravelingParserService {
 		return jouneyDuration;
 	}
 
-	public List<Activity> getActivities(String path)
+	public static List<Activity> getActivities(String path)
 			throws FileNotFoundException, XMLStreamException {
 
 		List<Activity> activityList = null;
@@ -173,7 +173,7 @@ public class TravelingParserService {
 		return activityList;
 	}
 
-	public List<Person> getPersons(String path, List<Activity> activityList)
+	public static List<Person> getPersons(String path, List<Activity> activityList)
 			throws FileNotFoundException, XMLStreamException {
 
 		ActivityRepository activityRepository = new ActivityRepository();
