@@ -9,31 +9,31 @@ import java.util.Map;
 
 public class FileParserService {
 
-	public static void addMoreInfoFromFiles(List<Activity> activities, List<Person> persons, String folderPaht) {
+	public static void addMoreInfoFromFiles(List<Activity> activities, List<Person> persons, String folderPath) {
 		//prepare data
 		Map<String, Person> personMap = getPersonMap(persons);
 		
 		//QRcode parsing method 
-		addMoreDataFromPng(personMap, activities, folderPaht);
+		addMoreDataFromPng(personMap, activities, folderPath);
 		
 		//pdf parsing method
-		addMoreDataFromPdf(personMap, activities, folderPaht);
+		addMoreDataFromPdf(personMap, activities, folderPath);
 		
 		//doc parsing method
-		addMoreDataFromDoc(personMap, activities, folderPaht);
+		addMoreDataFromDoc(personMap, activities, folderPath);
 	}
 
-	private static void addMoreDataFromDoc(Map<String, Person> personMap, List<Activity> activities, String folderPaht) {
+	private static void addMoreDataFromDoc(Map<String, Person> personMap, List<Activity> activities, String folderPath) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	private static void addMoreDataFromPdf(Map<String, Person> personMap, List<Activity> activities, String folderPaht) {
+	private static void addMoreDataFromPdf(Map<String, Person> personMap, List<Activity> activities, String folderPath) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	private static void addMoreDataFromPng(Map<String, Person> personMap, List<Activity> activities, String folderPaht) {
+	private static void addMoreDataFromPng(Map<String, Person> personMap, List<Activity> activities, String folderPath) {
 		// TODO Auto-generated method stub
 		
 	}

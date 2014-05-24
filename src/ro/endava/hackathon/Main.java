@@ -25,8 +25,8 @@ public class Main {
 		List<Person> persons = travelingParserService.getPersons("D:\\dataset.xml", activities);
 		Integer hours = 183;
 		
-		String folderPaht = ""; //TODO
-		FileParserService.addMoreInfoFromFiles(activities, persons, folderPaht);
+		String folderPath = ""; //TODO
+		FileParserService.addMoreInfoFromFiles(activities, persons, folderPath);
 		
 		System.out.println("Initializare processActivities si processPersons...");
 		List<ProcessActivity> processActivities = new ArrayList<ProcessActivity>();
