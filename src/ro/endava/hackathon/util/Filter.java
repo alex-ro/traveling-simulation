@@ -26,11 +26,11 @@ public class Filter {
 		return subList;
 	}
 	
-	public static List<ProcessPerson> getAvailablePersonForActivityAndSort(List<ProcessPerson> Persons, 
+	public static List<ProcessPerson> getAvailablePersonForActivityAndSort(List<ProcessPerson> persons, 
 			Activity activity, Comparator<ProcessPerson> comp) {
 		
-		List<ProcessPerson> filstePersonsByActivity = filstePersonsByActivityAndBuget(Persons, activity);
-		Collection<ProcessPerson> filter = Collections2.filter(filstePersonsByActivity, new Predicate<ProcessPerson> () {
+		List<ProcessPerson> filterPersonsByActivity = filterPersonsByActivityAndBuget(persons, activity);
+		Collection<ProcessPerson> filter = Collections2.filter(filterPersonsByActivity, new Predicate<ProcessPerson> () {
 			public boolean apply(ProcessPerson pp) {
 				return pp.getAssigned().equals(Boolean.TRUE) &&
 						pp.getAssigned().equals(Boolean.FALSE);
@@ -42,9 +42,9 @@ public class Filter {
 		return subList;
 	}
 	
-	private static List<ProcessPerson> filstePersonsByActivityAndBuget(List<ProcessPerson> Persons, Activity activity) {
+	private static List<ProcessPerson> filterPersonsByActivityAndBuget(List<ProcessPerson> persons, Activity activity) {
 		List<ProcessPerson> list = new ArrayList<ProcessPerson>();
-		for (ProcessPerson pp : Persons) {
+		for (ProcessPerson pp : persons) {
 			if (isPreferedActivity(pp, activity) && pp.getRemainingBudget() - activity.getTicketPrice() > 0) {
 				list.add(pp);
 			}
