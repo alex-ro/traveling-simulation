@@ -12,8 +12,8 @@ public class OutputTransform {
 		List<Result> res = new ArrayList<Result>();
 		for (ProcessPerson p : persons) {
 			Result r = new Result();
-			if (p.getProcessActivity() != null) {
-				r.setActivity(p.getProcessActivity().getActivity());
+			if (p.getAssignedToProcessActivity() != null) {
+				r.setActivity(p.getAssignedToProcessActivity().getActivity());
 			}
 			r.setPerson(p.getPerson());
 			r.setIndex(index);
