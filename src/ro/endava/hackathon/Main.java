@@ -1,5 +1,16 @@
 package ro.endava.hackathon;
 
+import ro.endava.hackathon.core.Activity;
+import ro.endava.hackathon.core.Person;
+import ro.endava.hackathon.core.ProcessActivity;
+import ro.endava.hackathon.core.ProcessPerson;
+import ro.endava.hackathon.core.Result;
+import ro.endava.hackathon.service.FileParserService;
+import ro.endava.hackathon.service.TravelingParserService;
+import ro.endava.hackathon.util.Comparators;
+import ro.endava.hackathon.util.Filter;
+import ro.endava.hackathon.util.OutputTransform;
+
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -7,22 +18,14 @@ import java.util.List;
 
 import javax.xml.stream.XMLStreamException;
 
-import ro.endava.hackathon.core.Activity;
-import ro.endava.hackathon.core.Person;
-import ro.endava.hackathon.core.ProcessActivity;
-import ro.endava.hackathon.core.ProcessPerson;
-import ro.endava.hackathon.core.Result;
-import ro.endava.hackathon.service.TravelingParserService;
-import ro.endava.hackathon.util.Comparators;
-import ro.endava.hackathon.util.Filter;
-import ro.endava.hackathon.util.OutputTransform;
-
 public class Main {
 	public static void main(String[] args) throws FileNotFoundException, XMLStreamException {
 		TravelingParserService travelingParserService = new TravelingParserService();
 		List<Activity> activities = travelingParserService.getActivities("D:\\dataset.xml");
 		List<Person> persons = travelingParserService.getPersons("D:\\dataset.xml", activities);
 		Integer hours = 183;
+		
+		FileParserService.addMoreInfoFromFiles(activities, persons);
 		
 		System.out.println("Initializare processActivities si processPersons...");
 		List<ProcessActivity> processActivities = new ArrayList<ProcessActivity>();
