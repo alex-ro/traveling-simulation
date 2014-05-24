@@ -1,43 +1,31 @@
 package ro.endava.hackathon.service;
 
-import ro.endava.hackathon.core.Activity;
-import ro.endava.hackathon.core.Person;
-
-import java.io.File;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import ro.endava.hackathon.core.Activity;
+import ro.endava.hackathon.core.Person;
+import ro.endava.hackathon.reader.DocReader;
+import ro.endava.hackathon.reader.PdfReader;
+import ro.endava.hackathon.reader.QRCodeReader;
+
 public class FileParserService {
 
-	public static void addMoreInfoFromFiles(List<Activity> activities, List<Person> persons, String folderPath) {
-		//prepare data
+	public static void addMoreInfoFromFiles(List<Activity> activities,
+			List<Person> persons, String folderPath) {
+		// prepare data
+		Map<String, Activity> activityMap = getActivityMap(activities);
 		Map<String, Person> personMap = getPersonMap(persons);
-		
-		//QRcode parsing method 
-		addMoreDataFromPng(personMap, activities, folderPath);
-		
-		//pdf parsing method
-		addMoreDataFromPdf(personMap, activities, folderPath);
-		
-		//doc parsing method
-		addMoreDataFromDoc(personMap, activities, folderPath);
-	}
 
-	private static void addMoreDataFromDoc(Map<String, Person> personMap, List<Activity> activities, String folderPath) {
-		// TODO Auto-generated method stub
-		
-	}
+		// QRcode parsing method
+		QRCodeReader.addMoreDataFromPng(personMap, activityMap, folderPath);
 
-	private static void addMoreDataFromPdf(Map<String, Person> personMap, List<Activity> activities, String folderPath) {
-		// TODO Auto-generated method stub
-		
-	}
+		// pdf parsing method
+		PdfReader.addMoreDataFromPdf(personMap, activities, folderPath);
 
-	private static void addMoreDataFromPng(Map<String, Person> personMap, List<Activity> activities, String folderPath) {
-		// TODO Auto-generated method stub
-		
+		// doc parsing method
+		DocReader.addMoreDataFromDoc(personMap, activities, folderPath);
 	}
 
 	private static Map<String, Person> getPersonMap(List<Person> persons) {
@@ -47,25 +35,14 @@ public class FileParserService {
 		}
 		return personMap;
 	}
-	
-	private List<String> getFilePaths(String folderPath, String extension) {
-		List<String> filePaths = new ArrayList<>();
-		
-		File folder = new File(folderPath);
-		File[] listOfFiles = folder.listFiles();
 
-		    for (int i = 0; i < listOfFiles.length; i++) {
-		    	String fileName = listOfFiles[i].getName();
-		    	if (listOfFiles[i].isFile() && fileName.contains(".png")) {
-		    		filePaths.add(folderPath+"\\" + fileName);
-			      } 
-		    }
-		      
-		
-		return filePaths;
+	private static Map<String, Activity> getActivityMap(
+			List<Activity> activities) {
+		Map<String, Activity> activityMap = new HashMap<String, Activity>();
+		for (Activity a : activities) {
+			activityMap.put(a.getName(), a);
+		}
+		return activityMap;
 	}
-	
-	
-	
-	
+
 }
