@@ -1,21 +1,19 @@
 package ro.endava.hackathon.service;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import ro.endava.hackathon.core.Activity;
 import ro.endava.hackathon.core.Person;
 import ro.endava.hackathon.reader.DocReader;
 import ro.endava.hackathon.reader.PdfReader;
 import ro.endava.hackathon.reader.QRCodeReader;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class FileParserService {
 
 	public static void addMoreInfoFromFiles(List<Activity> activities,
-			List<Person> persons, String folderPath) throws FileNotFoundException, IOException {
+			List<Person> persons, String folderPath) {
 		// prepare data
 		Map<String, Activity> activityMap = getActivityMap(activities);
 		Map<String, Person> personMap = getPersonMap(persons);
@@ -24,10 +22,10 @@ public class FileParserService {
 		QRCodeReader.addMoreDataFromPng(personMap, activityMap, folderPath);
 
 		// pdf parsing method
-		PdfReader.addMoreDataFromPdf(personMap, activities, folderPath);
+		PdfReader.addMoreDataFromPdf(personMap, activityMap, folderPath);
 
 		// doc parsing method
-		DocReader.addMoreDataFromDoc(personMap, activities, folderPath);
+		DocReader.addMoreDataFromDoc(personMap, activityMap, folderPath);
 	}
 
 	private static Map<String, Person> getPersonMap(List<Person> persons) {
