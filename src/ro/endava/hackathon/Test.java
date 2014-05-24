@@ -1,7 +1,7 @@
 /**
  * 
  */
-package ro.endava.hackaton;
+package ro.endava.hackathon;
 
 /**
  * @author gnaftanaila
