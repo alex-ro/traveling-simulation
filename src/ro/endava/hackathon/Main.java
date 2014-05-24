@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import ro.endava.hackathon.core.Activity;
+import ro.endava.hackathon.core.Person;
 import ro.endava.hackathon.core.ProcessActivity;
 import ro.endava.hackathon.core.ProcessPerson;
 import ro.endava.hackathon.core.Result;
@@ -15,10 +17,36 @@ public class Main {
 	public static void main(String[] args) {
 		// De citit din XML
 		Integer hours = 0;
+		List<Activity> activities = new ArrayList<Activity>();
+		List<Person> persons = new ArrayList<Person>();
+		
+		System.out.println("Initializare processActivities si processPersons...");
 		List<ProcessActivity> processActivities = new ArrayList<ProcessActivity>();
 		List<ProcessPerson> processPersons = new ArrayList<ProcessPerson>();
+		for (Activity currentActivity:activities) {
+			ProcessActivity processActivity = new ProcessActivity();
+			processActivity.setActivity(currentActivity);
+			processActivity.setWorking(true);
+			processActivity.setRemainingHours(currentActivity.getContinuousOpenHours());
+			processActivity.setPersonsAttending(null);
+			processActivities.add(processActivity);
+		}
+		for (Person currentPerson:persons) {
+			ProcessPerson processPerson = new ProcessPerson();
+			processPerson.setPerson(currentPerson);
+			processPerson.setAwake(true);
+			processPerson.setRemainingBudget(currentPerson.getBudget());
+			processPerson.setRemainingHours(currentPerson.getMaxAwakeTime());
+			processPerson.setAssigned(false);
+			processPerson.setAssignedToProcessActivity(null);
+		}
 
-		Integer totalTurnover = 0;
+		Long totalBudget = 0l;
+		for (Person currentPerson:persons) {
+			totalBudget += currentPerson.getBudget();
+		}
+
+		Long totalTurnover = 0l;
 		List<Result> results = new ArrayList<Result>();
 		
 		for (Integer currentHour = 0; currentHour < hours; currentHour++) {
@@ -75,6 +103,7 @@ public class Main {
 			}
 		}
 		
+		OutputTransform.writeResult(results, totalTurnover);
 		System.out.print("Suma totala este: " + totalTurnover);
 	}
 }
