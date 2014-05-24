@@ -6,7 +6,7 @@ public class ProcessActivity {
 	private Activity activity;
 	private Boolean working;
 	private Integer remainingHours;
-	private List<ProcessPerson> passengerActivity;
+	private List<ProcessPerson> personsAttending;
 
 	public Activity getActivity() {
 		return activity;
@@ -32,11 +32,11 @@ public class ProcessActivity {
 		this.remainingHours = remainingHours;
 	}
 
-	public List<ProcessPerson> getPassengerActivity() {
-		return passengerActivity;
+	public List<ProcessPerson> getPersonsAttending() {
+		return personsAttending;
 	}
 
-	public void setPassengerActivity(List<ProcessPerson> passengerActivity) {
-		this.passengerActivity = passengerActivity;
+	public void setPersonsAttending(List<ProcessPerson> personsAttending) {
+		this.personsAttending = personsAttending;
 	}
 }

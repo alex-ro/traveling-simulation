@@ -6,7 +6,7 @@ public class ProcessPerson {
 	private Boolean awake;
 	private Integer remainingHours;
 	private Boolean assigned;
-	private ProcessActivity processActivity;
+	private ProcessActivity assignedToProcessActivity;
 
 	public Person getPerson() {
 		return person;
@@ -48,11 +48,11 @@ public class ProcessPerson {
 		this.assigned = assigned;
 	}
 
-	public ProcessActivity getProcessActivity() {
-		return processActivity;
+	public ProcessActivity getAssignedToProcessActivity() {
+		return assignedToProcessActivity;
 	}
 
-	public void setProcessActivity(ProcessActivity processActivity) {
-		this.processActivity = processActivity;
+	public void setAssignedToProcessActivity(ProcessActivity assignedToProcessActivity) {
+		this.assignedToProcessActivity = assignedToProcessActivity;
 	}
 }
