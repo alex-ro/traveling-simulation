@@ -68,11 +68,10 @@ public class Main {
 		}
 		OutputTransform.writeResult(results, totalTurnover);
 
-		if (Configuration.LOG) {
-			System.out.println("Venitul maxim posibil este: " + totalBudget);
-			System.out.println("Suma totala incasata este: " + totalTurnover);
-			System.out.println("Procentul de incasare: " + (Double.valueOf(totalTurnover) / Double.valueOf(totalBudget)) * 100);
-		}
+		System.out.println("Venitul maxim posibil este: " + totalBudget);
+		System.out.println("Suma totala incasata este: " + totalTurnover);
+		System.out.println("Procentul de incasare: " + (Double.valueOf(totalTurnover) / Double.valueOf(totalBudget)) * 100);
+		
 		long endTime = System.currentTimeMillis();
 		long duration = endTime - startTime;
 		if (Configuration.TIMER) {
