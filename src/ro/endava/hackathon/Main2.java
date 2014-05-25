@@ -18,7 +18,6 @@ import com.google.zxing.WriterException;
 
 /**
  * @author gnaftanaila
- * 
  */
 public class Main2 {
 
@@ -34,17 +33,16 @@ public class Main2 {
 		TravelingParserService travelingParserService = new TravelingParserService();
 
 		Integer journey = travelingParserService
-				.getJouneyDuration("D:\\dataset.xml");
+				.getJouneyDuration(Configuration.DATASET_PATH);
 
 		List<Activity> activityList = travelingParserService
-				.getActivities("D:\\dataset.xml");
+				.getActivities(Configuration.DATASET_PATH);
 
 		List<Person> personList = travelingParserService.getPersons(
-				"D:\\dataset.xml", activityList);
+				Configuration.DATASET_PATH, activityList);
 
 		FileParserService.addMoreInfoFromFiles(activityList, personList,
-				"D:\\additional-files");
-		
+				Configuration.ADDITION_FILES_PATH);
 
 	}
 

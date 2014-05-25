@@ -1,6 +1,5 @@
 package ro.endava.hackathon;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,17 +24,20 @@ public class Main {
 		if (Configuration.LOG) {
 			System.out.println("Parsare dataset pentru activitati...");
 		}
-		List<Activity> activities = TravelingParserService.getActivities("D:\\dataset.xml");
+		List<Activity> activities = TravelingParserService.getActivities(Configuration.DATASET_PATH);
 		if (Configuration.LOG) {
 			System.out.println("Parsare dataset pentru persoane...");
 		}
-		List<Person> persons = TravelingParserService.getPersons("D:\\dataset.xml", activities);
-		Integer hours = 183;
+		List<Person> persons = TravelingParserService.getPersons(Configuration.DATASET_PATH, activities);
+		if (Configuration.LOG) {
+			System.out.println("Parsare dataset pentru numarul de ore...");
+		}
+		Integer hours = TravelingParserService.getJouneyDuration(Configuration.DATASET_PATH);
 		
 		if (Configuration.LOG) {
 			System.out.println("Parsare alte fisiere pentru informatii suplimentare...");
 		}
-		String folderPath = "";
+		String folderPath = Configuration.ADDITION_FILES_PATH;
 		FileParserService.addMoreInfoFromFiles(activities, persons, folderPath);
 
 		List<ProcessActivity> processActivities = InitializationService.prepareProcessActivitiesFromActivities(activities);
@@ -54,8 +56,9 @@ public class Main {
 		for (Integer currentHour = 0; currentHour < hours; currentHour++) {
 			if (Configuration.LOG) {
 				System.out.println("SE ASIGNEAZA PERSOANELE PENTRU ACTIVITATILE DIN ORA " + currentHour + "!");
-			}
-			totalTurnover += AssignmentService.assignActivitiesForHour(processActivities, processPersons);
+			}	
+			// totalTurnover += AssignmentService.assignActivitiesForHour(processActivities, processPersons, Comparators.activityCompareByRemainingHours, Comparators.personCompareByRemainingBugetAscending);
+			totalTurnover += AssignmentService.assignActivitiesForHourOptimized(processActivities, processPersons);
 
 			results.addAll(OutputTransform.getOutput(processPersons, currentHour));
 

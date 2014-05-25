@@ -1,5 +1,6 @@
 package ro.endava.hackathon.util;
 
+import ro.endava.hackathon.Configuration;
 import ro.endava.hackathon.core.ProcessPerson;
 import ro.endava.hackathon.core.Result;
 
@@ -62,7 +63,7 @@ public class OutputTransform {
 			TransformerFactory transformerFactory = TransformerFactory.newInstance();
 			Transformer transformer = transformerFactory.newTransformer();
 			DOMSource source = new DOMSource(doc);
-			StreamResult result = new StreamResult(new File("D:\\output.xml"));
+			StreamResult result = new StreamResult(new File(Configuration.OUTPUT_PATH));
 			transformer.transform(source, result);
 			
 		} catch (ParserConfigurationException pce) {

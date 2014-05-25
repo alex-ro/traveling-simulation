@@ -39,4 +39,13 @@ public class ProcessActivity {
 	public void setPersonsAttending(List<ProcessPerson> personsAttending) {
 		this.personsAttending = personsAttending;
 	}
+	
+	public ProcessActivity clone() {
+		ProcessActivity clone = new ProcessActivity();
+		clone.setActivity(this.activity);
+		clone.setPersonsAttending(this.personsAttending);
+		clone.setRemainingHours(this.remainingHours);
+		clone.setWorking(this.working);
+		return clone;
+	}
 }

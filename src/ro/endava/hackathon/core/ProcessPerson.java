@@ -55,4 +55,15 @@ public class ProcessPerson {
 	public void setAssignedToProcessActivity(ProcessActivity assignedToProcessActivity) {
 		this.assignedToProcessActivity = assignedToProcessActivity;
 	}
+	
+	public ProcessPerson clone() {
+		ProcessPerson clone = new ProcessPerson();
+		clone.setAssigned(this.assigned);
+		clone.setAssignedToProcessActivity(this.assignedToProcessActivity);
+		clone.setAwake(this.awake);
+		clone.setPerson(this.person);
+		clone.setRemainingBudget(this.remainingBudget);
+		clone.setRemainingHours(this.remainingHours);
+		return clone;
+	}
 }
