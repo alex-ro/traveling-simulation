@@ -6,37 +6,53 @@ package ro.endava.hackathon.reader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.imageio.ImageIO;
 
+import ro.endava.hackathon.core.Activity;
+import ro.endava.hackathon.core.Person;
+import ro.endava.hackathon.util.FileUtil;
+
 import com.google.zxing.BinaryBitmap;
+import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatReader;
 import com.google.zxing.NotFoundException;
 import com.google.zxing.Result;
 import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
 import com.google.zxing.common.HybridBinarizer;
-
-import ro.endava.hackathon.core.Activity;
-import ro.endava.hackathon.core.Person;
-import ro.endava.hackathon.util.FileUtil;
+import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
 /**
  * @author gnaftanaila
- *
+ * 
  */
 public class QRCodeReader {
-	public static void addMoreDataFromPng(Map<String, Person> personMap, Map<String,Activity> activityMap, String folderPath) {
-		/*List<String> files = FileUtil.getFilePaths(folderPath, ".png");
-		for (String filePath: files) {
-			
-		}*/
+	public static void addMoreDataFromPng(Map<String, Person> personMap,
+			Map<String, Activity> activityMap, String folderPath)
+			throws FileNotFoundException, NotFoundException, IOException {
+
+		String charset = "UTF-8"; // or "ISO-8859-1"
+		Map<EncodeHintType, ErrorCorrectionLevel> hintMap = new HashMap<EncodeHintType, ErrorCorrectionLevel>();
+		hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);
+
+		List<String> files = FileUtil.getFilePaths(folderPath, ".png");
+
+		for (String filePath : files) {
+			String update = readQRCode(filePath, charset, hintMap);
+			FileUtil.updatedEntities(update, activityMap, personMap);
+		}
 		
+		/*String update = readQRCode("D:\\0006.png", charset, hintMap);
+		FileUtil.updatedEntities(update, activityMap, personMap);*/
+
 	}
-	
-	private static String readQRCode(String filePath, String charset, Map hintMap)
-			throws FileNotFoundException, IOException, NotFoundException {
+
+	private static String readQRCode(String filePath, String charset,
+			Map hintMap) throws FileNotFoundException, IOException,
+			NotFoundException {
 		BinaryBitmap binaryBitmap = new BinaryBitmap(new HybridBinarizer(
 				new BufferedImageLuminanceSource(
 						ImageIO.read(new FileInputStream(filePath)))));
