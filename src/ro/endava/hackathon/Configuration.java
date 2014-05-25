@@ -1,7 +1,7 @@
 package ro.endava.hackathon;
 
 public class Configuration {
-	public static Boolean LOG = true;
+	public static Boolean LOG = false;
 	public static Boolean TIMER = true;
 	
 	public static String DATASET_PATH = "D:\\dataset.xml";

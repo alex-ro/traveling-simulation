@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import ro.endava.hackathon.Configuration;
-import ro.endava.hackathon.MainOptimized;
+import ro.endava.hackathon.Main;
 import ro.endava.hackathon.core.ProcessActivity;
 import ro.endava.hackathon.core.ProcessPerson;
 import ro.endava.hackathon.util.Comparators;
@@ -15,7 +15,7 @@ import ro.endava.hackathon.util.ListUtil;
 
 public class AssignmentOptimizedService {
 	// Se asigneaza persoanele disponibile la evenimentele disponibile dupa ce se sorteaza in functie de parametrii trimisi...
-	public static Long assignActivitiesForHour(List<ProcessActivity> processActivities, List<ProcessPerson> processPersons, Comparator<ProcessActivity> activitiesComparator, Comparator<ProcessPerson> personsComparator) {
+	public static Long assignActivitiesForHour(List<ProcessActivity> processActivities, List<ProcessPerson> processPersons, Comparator<ProcessActivity> activitiesComparator, Comparator<ProcessPerson> personsComparator, Integer nrOfHoursToPredict) {
 		List<ProcessActivity> toDecideWhatToDo = new ArrayList<ProcessActivity>();
 		Long turnoverThisHour = 0l;
 		List<ProcessActivity> filteredProcessActivities = Filter.getOpenActivitiesAndSort(processActivities, activitiesComparator);
@@ -58,13 +58,13 @@ public class AssignmentOptimizedService {
 			}
 			UpdateService.updateProcessActivityAtEndOfHour(copyOfProcessActivities);
 			UpdateService.updateProcessPersonAtEndOfHour(copyOfProcessPersons);
-			Long caseWithActivityClosed = MainOptimized.predictNextHours(copyOfProcessActivities, copyOfProcessPersons, 15, false);
+			Long caseWithActivityClosed = Main.predictNextHours(copyOfProcessActivities, copyOfProcessPersons, nrOfHoursToPredict, false);
 			copyOfProcessActivities = new ArrayList<ProcessActivity>();
 			copyOfProcessPersons = new ArrayList<ProcessPerson>();
 			ListUtil.makeCopy(processActivities, processPersons, copyOfProcessActivities, copyOfProcessPersons);
 			UpdateService.updateProcessActivityAtEndOfHour(copyOfProcessActivities);
 			UpdateService.updateProcessPersonAtEndOfHour(copyOfProcessPersons);
-			Long caseWithActivityUnforced = MainOptimized.predictNextHours(copyOfProcessActivities, copyOfProcessPersons, 15, false);
+			Long caseWithActivityUnforced = Main.predictNextHours(copyOfProcessActivities, copyOfProcessPersons, nrOfHoursToPredict, false);
 			
 			if (caseWithActivityUnforced<caseWithActivityClosed) {
 				if (processActivity.getActivity().equals(processActivity.getActivity())) {
@@ -77,34 +77,34 @@ public class AssignmentOptimizedService {
 	}
 
 	// Se asigneaza persoanele disponibile la evenimentele disponibile dupa ce se sorteaza in functie de parametrii trimisi...
-	public static Long assignActivitiesForHourOptimized(List<ProcessActivity> processActivities, List<ProcessPerson> processPersons) {
+	public static Long assignActivitiesForHourOptimized(List<ProcessActivity> processActivities, List<ProcessPerson> processPersons, Integer nrOfHoursToPredict) {
 		List<ProcessActivity> copyOfProcessActivities = new ArrayList<ProcessActivity>();
 		List<ProcessPerson> copyOfProcessPersons = new ArrayList<ProcessPerson>();
 		ListUtil.makeCopy(processActivities, processPersons, copyOfProcessActivities, copyOfProcessPersons);
-		Long turnoverForTicketBudgetDescending = assignActivitiesForHour(copyOfProcessActivities, copyOfProcessPersons, Comparators.activityCompareByTicket, Comparators.personCompareByRemainingBugetDesceding);
+		Long turnoverForTicketBudgetDescending = assignActivitiesForHour(copyOfProcessActivities, copyOfProcessPersons, Comparators.activityCompareByTicket, Comparators.personCompareByRemainingBugetDesceding, nrOfHoursToPredict);
 		copyOfProcessActivities = new ArrayList<ProcessActivity>();
 		copyOfProcessPersons = new ArrayList<ProcessPerson>();
 		ListUtil.makeCopy(processActivities, processPersons, copyOfProcessActivities, copyOfProcessPersons);
-		Long turnoverForTicketBudgetAscending = assignActivitiesForHour(copyOfProcessActivities, copyOfProcessPersons, Comparators.activityCompareByTicket, Comparators.personCompareByRemainingBugetAscending);
+		Long turnoverForTicketBudgetAscending = assignActivitiesForHour(copyOfProcessActivities, copyOfProcessPersons, Comparators.activityCompareByTicket, Comparators.personCompareByRemainingBugetAscending, nrOfHoursToPredict);
 		copyOfProcessActivities = new ArrayList<ProcessActivity>();
 		copyOfProcessPersons = new ArrayList<ProcessPerson>();
 		ListUtil.makeCopy(processActivities, processPersons, copyOfProcessActivities, copyOfProcessPersons);
-		Long turnoverForRemainingHoursBudgetDescending = assignActivitiesForHour(copyOfProcessActivities, copyOfProcessPersons, Comparators.activityCompareByRemainingHours, Comparators.personCompareByRemainingBugetDesceding);
+		Long turnoverForRemainingHoursBudgetDescending = assignActivitiesForHour(copyOfProcessActivities, copyOfProcessPersons, Comparators.activityCompareByRemainingHours, Comparators.personCompareByRemainingBugetDesceding, nrOfHoursToPredict);
 		copyOfProcessActivities = new ArrayList<ProcessActivity>();
 		copyOfProcessPersons = new ArrayList<ProcessPerson>();
 		ListUtil.makeCopy(processActivities, processPersons, copyOfProcessActivities, copyOfProcessPersons);
-		Long turnoverForRemainingHoursBudgetAscending = assignActivitiesForHour(copyOfProcessActivities, copyOfProcessPersons, Comparators.activityCompareByRemainingHours, Comparators.personCompareByRemainingBugetAscending);
+		Long turnoverForRemainingHoursBudgetAscending = assignActivitiesForHour(copyOfProcessActivities, copyOfProcessPersons, Comparators.activityCompareByRemainingHours, Comparators.personCompareByRemainingBugetAscending, nrOfHoursToPredict);
 
 		if (turnoverForTicketBudgetDescending >= turnoverForTicketBudgetAscending && turnoverForTicketBudgetDescending >= turnoverForRemainingHoursBudgetDescending && turnoverForTicketBudgetDescending >= turnoverForRemainingHoursBudgetAscending) {
-			return assignActivitiesForHour(processActivities, processPersons, Comparators.activityCompareByTicket, Comparators.personCompareByRemainingBugetDesceding);
+			return assignActivitiesForHour(processActivities, processPersons, Comparators.activityCompareByTicket, Comparators.personCompareByRemainingBugetDesceding, nrOfHoursToPredict);
 		} else if (turnoverForTicketBudgetAscending >= turnoverForTicketBudgetDescending && turnoverForTicketBudgetAscending >= turnoverForRemainingHoursBudgetDescending && turnoverForTicketBudgetAscending >= turnoverForRemainingHoursBudgetAscending) {
-			return assignActivitiesForHour(processActivities, processPersons, Comparators.activityCompareByTicket, Comparators.personCompareByRemainingBugetAscending);
+			return assignActivitiesForHour(processActivities, processPersons, Comparators.activityCompareByTicket, Comparators.personCompareByRemainingBugetAscending, nrOfHoursToPredict);
 		} else if (turnoverForRemainingHoursBudgetDescending >= turnoverForTicketBudgetDescending && turnoverForRemainingHoursBudgetDescending >= turnoverForTicketBudgetAscending
 				&& turnoverForRemainingHoursBudgetDescending >= turnoverForRemainingHoursBudgetAscending) {
-			return assignActivitiesForHour(processActivities, processPersons, Comparators.activityCompareByRemainingHours, Comparators.personCompareByRemainingBugetDesceding);
+			return assignActivitiesForHour(processActivities, processPersons, Comparators.activityCompareByRemainingHours, Comparators.personCompareByRemainingBugetDesceding, nrOfHoursToPredict);
 		} else if (turnoverForRemainingHoursBudgetAscending >= turnoverForTicketBudgetDescending && turnoverForRemainingHoursBudgetAscending >= turnoverForTicketBudgetAscending
 				&& turnoverForRemainingHoursBudgetAscending >= turnoverForRemainingHoursBudgetDescending) {
-			return assignActivitiesForHour(processActivities, processPersons, Comparators.activityCompareByRemainingHours, Comparators.personCompareByRemainingBugetAscending);
+			return assignActivitiesForHour(processActivities, processPersons, Comparators.activityCompareByRemainingHours, Comparators.personCompareByRemainingBugetAscending, nrOfHoursToPredict);
 		} else
 			return 0l;
 	}
