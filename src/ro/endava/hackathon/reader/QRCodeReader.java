@@ -40,21 +40,15 @@ public class QRCodeReader {
 			String update = readQRCode(filePath, charset, hintMap);
 			FileUtil.updatedEntities(update, activityMap, personMap);
 		}
-		
-		/*String update = readQRCode("D:\\0006.png", charset, hintMap);
-		FileUtil.updatedEntities(update, activityMap, personMap);*/
-
 	}
 
-	private static String readQRCode(String filePath, String charset,
-			Map hintMap) {
+	private static String readQRCode(String filePath, String charset, Map hintMap) {
 		String result = "";
 		try {
 			BinaryBitmap binaryBitmap = new BinaryBitmap(new HybridBinarizer(
 					new BufferedImageLuminanceSource(
 							ImageIO.read(new FileInputStream(filePath)))));
-			Result qrCodeResult = new MultiFormatReader().decode(binaryBitmap,
-					hintMap);
+			Result qrCodeResult = new MultiFormatReader().decode(binaryBitmap, hintMap);
 			result = qrCodeResult.getText();
 		}
 		catch (Exception e) {

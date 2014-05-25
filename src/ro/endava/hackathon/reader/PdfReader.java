@@ -19,10 +19,9 @@ public class PdfReader {
 	public static void addMoreDataFromPdf(Map<String, Person> personMap,
 			Map<String, Activity> activityMap, String folderPath) {
 		List<String> filePaths = FileUtil.getFilePaths(folderPath, ".pdf");
-		
-		try {
-			for (String pdf : filePaths) {
-				System.out.println("path: " + pdf);
+
+		for (String pdf : filePaths) {
+			try {
 				StringBuilder text = new StringBuilder();
 				com.itextpdf.text.pdf.PdfReader reader = new com.itextpdf.text.pdf.PdfReader(pdf);
 				PdfReaderContentParser parser = new PdfReaderContentParser(reader);
@@ -32,12 +31,10 @@ public class PdfReader {
 		            text.append(strategy.getResultantText());
 		        }
 		        reader.close();
-		        // TODO Do something with text!
 		        FileUtil.updatedEntities(text.toString(), activityMap, personMap);
+			} catch (Exception ex) {
+				ex.printStackTrace();
 			}
-		}
-		catch (Exception ex) {
-			System.out.println(ex.getMessage());
 		}
 	}
 

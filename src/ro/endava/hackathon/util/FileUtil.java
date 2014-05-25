@@ -3,6 +3,9 @@
  */
 package ro.endava.hackathon.util;
 
+import ro.endava.hackathon.core.Activity;
+import ro.endava.hackathon.core.Person;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,9 +14,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import ro.endava.hackathon.core.Activity;
-import ro.endava.hackathon.core.Person;
 
 /**
  * @author gnaftanaila
@@ -51,19 +51,12 @@ public class FileUtil {
 				return a1.length() - a0.length();
 			}
 		});
+		// find a name
 		for (String personName : keySet) {
-
-			/*
-			 * Pattern pattern = Pattern.compile(personName); Matcher matcher =
-			 * pattern.matcher(text); if (matcher.matches()) { pName =
-			 * personName; break; }
-			 */
-
 			if (text.contains(personName)) {
 				pName = personName;
 				break;
 			}
-
 		}
 
 		if (pName != null) {
@@ -76,12 +69,6 @@ public class FileUtil {
 
 			// Find activities
 			for (String activityName : activityMap.keySet()) {
-				/*
-				 * Pattern pattern = Pattern.compile(activityName); Matcher
-				 * matcherActivity = pattern.matcher(text); if
-				 * (matcherActivity.matches()) {
-				 * moreActivities.add(activityName); }
-				 */
 				if (text.contains(activityName)) {
 					moreActivities.add(activityName);
 				}
@@ -99,9 +86,7 @@ public class FileUtil {
 				if (!activityList.contains(activity)) {
 					activityList.add(activity);
 				}
-
 			}
 		}
-
 	}
 }

@@ -12,19 +12,16 @@ import org.apache.poi.xwpf.usermodel.XWPFDocument;
 
 public class DocReader {
 	public static void addMoreDataFromDoc(Map<String, Person> personMap, Map<String, Activity> activityMap, String folderPath) {
-		try {
-			for (String filepath : FileUtil.getFilePaths(folderPath, ".docx")) {
-				System.out.println("path: " + filepath);
+		for (String filepath : FileUtil.getFilePaths(folderPath, ".docx")) {
+			try {
 				XWPFDocument docx = new XWPFDocument(new FileInputStream(filepath));
 				XWPFWordExtractor wordxExtractor = new XWPFWordExtractor(docx);
 				String text = wordxExtractor.getText();
 				wordxExtractor.close();
-				// TODO Do something with text!
 				FileUtil.updatedEntities(text.toString(), activityMap, personMap);
+			} catch (Exception ex) {
+				ex.printStackTrace();
 			}
-		}
-		catch (Exception ex) {
-			System.out.println(ex.getMessage());
 		}
 	}
 }

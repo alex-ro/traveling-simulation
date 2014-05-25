@@ -1,11 +1,5 @@
 package ro.endava.hackathon;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.xml.stream.XMLStreamException;
-
 import ro.endava.hackathon.core.Activity;
 import ro.endava.hackathon.core.Person;
 import ro.endava.hackathon.core.ProcessActivity;
@@ -18,8 +12,11 @@ import ro.endava.hackathon.service.TravelingParserService;
 import ro.endava.hackathon.service.UpdateService;
 import ro.endava.hackathon.util.OutputTransform;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Main {
-	public static void main(String[] args) throws XMLStreamException, IOException {
+	public static void main(String[] args) {
 		long startTime = System.currentTimeMillis();
 		if (Configuration.LOG) {
 			System.out.println("Parsare dataset pentru activitati...");
