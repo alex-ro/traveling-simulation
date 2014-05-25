@@ -6,6 +6,8 @@ import ro.endava.hackathon.core.Result;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -38,6 +40,12 @@ public class OutputTransform {
 	}
 	
 	public static void writeResult(List<Result> results, Long totalAmount) {
+		Collections.sort(results, new Comparator<Result>() {
+			@Override
+			public int compare(Result o1, Result o2) {
+				return o1.getPerson().getName().compareTo(o2.getPerson().getName());
+			}
+		});
 		try {
 			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
