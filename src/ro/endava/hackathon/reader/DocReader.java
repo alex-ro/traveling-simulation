@@ -20,6 +20,7 @@ public class DocReader {
 				String text = wordxExtractor.getText();
 				wordxExtractor.close();
 				// TODO Do something with text!
+				FileUtil.updatedEntities(text.toString(), activityMap, personMap);
 			}
 		}
 		catch (Exception ex) {

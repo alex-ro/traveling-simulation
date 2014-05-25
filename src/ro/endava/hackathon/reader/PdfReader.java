@@ -33,6 +33,7 @@ public class PdfReader {
 		        }
 		        reader.close();
 		        // TODO Do something with text!
+		        FileUtil.updatedEntities(text.toString(), activityMap, personMap);
 			}
 		}
 		catch (Exception ex) {
