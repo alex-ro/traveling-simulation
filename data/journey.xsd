@@ -1,0 +1,136 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://www.endava.com/hackathon/journey"
+            xmlns:tns="http://www.endava.com/hackathon/journey"
+            elementFormDefault="qualified">
+
+    <xsd:element name="journey" type="tns:journeyType"/>
+    <xsd:element name="output" type="tns:outputType"/>
+
+    <xsd:complexType name="journeyType">
+        <xsd:sequence>
+            <xsd:element name="activities">
+                <xsd:complexType>
+                    <xsd:all>
+                        <xsd:element ref="tns:dance" />
+                        <xsd:element name="pool" type="tns:pool" />
+                        <xsd:element name="bowling" type="tns:bowling" />
+                        <xsd:element name="spa" type="tns:spa" />
+                        <xsd:element name="volleyball" type="tns:volleyball" />
+                        <xsd:element name="library" type="tns:library" />
+                        <xsd:element name="club" type="tns:club" />
+                        <xsd:element name="cinema" type="tns:cinema" />
+                        <xsd:element name="theatre" type="tns:theatre" />
+                    </xsd:all>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="persons">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="person" type="tns:personType" minOccurs="1" maxOccurs="2500"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:sequence>
+        <xsd:attribute name="duration" type="xsd:int" />
+    </xsd:complexType>
+
+    <xsd:element name="activity" type="tns:activityType" />
+    <!-- Abstract activity type -->
+    <xsd:complexType name="activityType">
+        <xsd:sequence>
+            <xsd:element name="capacity" type="xsd:int"/>
+            <xsd:element name="minNoOfParticipants" type="xsd:int"/>
+            <xsd:element name="ticketPrice" type="xsd:int"/>
+            <xsd:element name="continuousOpenHours" type="xsd:int"/>
+            <xsd:element name="maintenanceHours" type="xsd:int"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:element name="dance" type="tns:dance" />
+
+    <!-- Concrete activity types -->
+    <xsd:complexType name="dance">
+        <xsd:complexContent>
+            <xsd:extension base="tns:activityType"/>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="pool">
+        <xsd:complexContent>
+            <xsd:extension base="tns:activityType"/>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="bowling">
+        <xsd:complexContent>
+            <xsd:extension base="tns:activityType"/>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="spa">
+        <xsd:complexContent>
+            <xsd:extension base="tns:activityType"/>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="volleyball">
+        <xsd:complexContent>
+            <xsd:extension base="tns:activityType"/>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="library">
+        <xsd:complexContent>
+            <xsd:extension base="tns:activityType"/>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="club">
+        <xsd:complexContent>
+            <xsd:extension base="tns:activityType"/>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="cinema">
+        <xsd:complexContent>
+            <xsd:extension base="tns:activityType"/>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="theatre">
+        <xsd:complexContent>
+            <xsd:extension base="tns:activityType"/>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <!-- define person characteristics -->
+    <xsd:complexType name="personType">
+        <xsd:sequence>
+            <xsd:element name="name" type="xsd:ID"/>
+            <xsd:element name="budget" type="xsd:int"/>
+            <xsd:element name="preferences" type="xsd:NMTOKENS" minOccurs="0"/>
+            <xsd:element name="continuousSleepTime" type="xsd:int"/>
+            <xsd:element name="maxAwakeTime" type="xsd:int"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+
+    <!-- describes how each person has spent his/her journey -->
+    <xsd:complexType name="outputType">
+        <xsd:sequence>
+            <xsd:element name="totalAmountSpent" type="xsd:int"/>
+            <xsd:element name="entry" minOccurs="1" maxOccurs="unbounded">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="personId" type="xsd:string" />
+                        <!-- zero based -->
+                        <xsd:element name="hourIndex" type="xsd:int" />
+                        <xsd:element name="activity" type="xsd:string" minOccurs="0"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:sequence>
+        <xsd:attribute name="teamId" type="xsd:string" />
+    </xsd:complexType>
+
+</xsd:schema>
